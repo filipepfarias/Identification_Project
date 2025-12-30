@@ -8,7 +8,7 @@ function generate_noisy_data()
 
     sol_CSTR = solve(cstr_model(),RK4());
 
-    t_sim, noisy_sim = sol_CSTR.t, [sol_CSTR(t) + .05abs.(rand(d,2)) for t in sol_CSTR.t]
+    t_sim, noisy_sim = sol_CSTR.t, [sol_CSTR(t) + .1abs.(rand(d,2)) for t in sol_CSTR.t]
 
     return t_sim, noisy_sim
 end
@@ -83,7 +83,7 @@ function solve_constrained_identification()
             residuals[nd] == (x[n,1] - noisy_sim[nd][1])^2 + (x[n,2] - noisy_sim[nd][2])^2
         )
 
-    @objective(model, Min, sum(residuals) + .0sum(u[i]^2 for i in 1:n))
+    @objective(model, Min, sum(residuals) + .01sum(u[i]^2 for i in 1:n))
     
     optimize!(model)
     
