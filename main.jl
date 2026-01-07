@@ -5,10 +5,13 @@ using Distributions, JuMP, Ipopt, DataInterpolations
 function generate_noisy_data()
     # Choose a heavy-tailed noisy distribution
     d = TDist(1.5)
+    nd = 100
 
     sol_CSTR = solve(cstr_model(),RK4());
 
-    t_sim, noisy_sim = sol_CSTR.t, [sol_CSTR(t) + .1abs.(rand(d,2)) for t in sol_CSTR.t]
+    t_sim = range(cstr_model().tspan...,nd)
+
+    t_sim, noisy_sim = collect(t_sim), [sol_CSTR(t) + .2abs.(rand(d,2)) for t in t_sim]
 
     return t_sim, noisy_sim
 end
