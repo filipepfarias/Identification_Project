@@ -31,7 +31,7 @@ ax2 = Axis(f[2,1],
 lines!(ax2, sol_CSTR.t, cstr_model().p[4](sol_CSTR.t),
     label="Original Input")
 lines!(ax2, t, u_opt, 
-    label="Original Input")
+    label="Fitted Input")
 axislegend(ax2)
 
 Label(f[3,1],
