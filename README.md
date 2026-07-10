@@ -1,4 +1,4 @@
-# Essays on Dynamical Systems Identification
+## Essays on Dynamical Systems Identification
 
 This code is a study to use the JuMP library with the identification of dynamical systems.
 
@@ -11,6 +11,10 @@ Please, instantiate the `Manifest.toml`, `] activate .` and `include("main.jl")`
 The goal is to simultaneously reconstruct the state trajectory $x(t)$, identify the unknown time-varying dilution rate $u(t) = D(t)$, and estimate the kinetic parameters $(\mu_m, k_s, Y)$ from $n_d = 100$ noisy state measurements $\{(t^d_i,\, y_i)\}_{i=1}^{n_d}$.
 
 This is posed as a single nonlinear program (NLP) where the ODE dynamics enter as hard equality constraints — a strategy known as **direct collocation** or **simultaneous approach**. The key idea is that neither the state trajectory nor the input are integrated forward explicitly; instead, they are all decision variables, and the ODE is enforced algebraically at each grid point by the optimizer.
+
+![CSTR Identification Results](CSTR_results.png)
+
+*Top: true ODE solution (solid), noisy measurements (circles), and optimized trajectory (dashed) for biomass $x_1$ and substrate $x_2$. Bottom: true dilution rate $D(t)$ vs. identified input $u_\text{opt}(t)$. The fitted parameters are shown in the caption.*
 
 ---
 
@@ -41,7 +45,7 @@ The CSTR model defines the vector field $f : \mathbb{R}^2 \times \mathbb{R}^3 \t
 
 $$
 f(x, p, u, t) = \begin{bmatrix}
-\mu(x_2,\, p_1,\, p_2)\, x_1 - u\, x_1 \\[4pt]
+\mu(x_2,\, p_1,\, p_2)\, x_1 - u\, x_1 \\
 u\,(s_f - x_2) - \dfrac{\mu(x_2,\, p_1,\, p_2)}{p_3}\, x_1
 \end{bmatrix}, \quad \mu(s, \mu_m, k_s) = \frac{\mu_m\, s}{k_s + s}
 $$
